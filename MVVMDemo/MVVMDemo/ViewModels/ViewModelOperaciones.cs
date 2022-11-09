@@ -25,8 +25,8 @@ namespace MVVMDemo.ViewModels
         }
 
 
-        int valorA;
-        public int ValorA
+        double valorA;
+        public double ValorA
         {
             get { return valorA; }
             set
@@ -39,8 +39,8 @@ namespace MVVMDemo.ViewModels
             }
         }
 
-        int valorB;
-        public int ValorB
+        double valorB;
+        public double ValorB
         {
             get { return valorB; }
             set
@@ -53,8 +53,8 @@ namespace MVVMDemo.ViewModels
             }
         }
 
-        int resultadoSuma;
-        public int ResultadoSuma
+        double resultadoSuma, resultadoResta, resultadoMultiplicacion, resultadoDivision;
+        public double ResultadoSuma
         {
             get { return resultadoSuma; }
             set
@@ -67,9 +67,51 @@ namespace MVVMDemo.ViewModels
             }
         }
 
+        public double ResultadoResta
+        {
+            get { return resultadoResta; }
+            set
+            {
+                if (resultadoResta != value)
+                {
+                    resultadoResta = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public double ResultadoMultiplicacion
+        {
+            get { return resultadoMultiplicacion; }
+            set
+            {
+                if (resultadoMultiplicacion != value)
+                {
+                    resultadoMultiplicacion = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ResultadoDivision
+        {
+            get { return resultadoDivision; }
+            set
+            {
+                if (resultadoDivision != value)
+                {
+                    resultadoDivision = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         public ICommand Sumar { protected set; get; }
+        public ICommand Restar { protected set; get; }
+        public ICommand Multiplicar { protected set; get; }
         public ICommand Dividir { protected set; get; }
 
 
@@ -78,14 +120,29 @@ namespace MVVMDemo.ViewModels
         {
             Sumar = new Command(() =>
             {
-                ResultadoSuma = ValorA + ValorB;
+                ResultadoSuma = Math.Round(ValorA + ValorB, 2);
+            });
+
+            Restar = new Command(()=>
+            {
+                ResultadoResta = Math.Round(ValorA - ValorB, 2);
+            });
+
+            Multiplicar = new Command(() =>
+            {
+                ResultadoMultiplicacion = Math.Round(ValorA * ValorB, 2);
             });
 
             Dividir = new Command(() =>
             {
                 if (ValorB==0)
                 {
-                    Message = "No puedes dividir entre0";
+                    Message = "Error: No puedes dividir entre 0";
+                    ResultadoDivision = 0;
+                }
+                else
+                {
+                    ResultadoDivision = Math.Round(ValorA / ValorB,2);
                 }
 
             });

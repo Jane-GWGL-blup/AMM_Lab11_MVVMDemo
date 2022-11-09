@@ -15,7 +15,7 @@ namespace MVVMDemo.Views
         public ViewOperaciones()
         {
             InitializeComponent();
-            this.BindingContext = new ViewOperaciones();
+            this.BindingContext = new ViewModels.ViewModelOperaciones();
         }
 
         
